@@ -131,11 +131,34 @@ const LEGACY_INFOMIND_PREFIX = [
 // 검사 제외 — js-legacy-*는 전환기 JS hook
 const JS_LEGACY_ALLOWLIST = /\bjs-legacy-[\w-]+\b/
 
+// 11. R-16 — KRDS 28종 카탈로그 enum 강제 (info-design 핵심 가치)
+//   src/styles/6-components/{name}.css의 name이 28종 외이면 신설 금지.
+//   skill/references/krds-components.md 카탈로그가 단일 소스.
+const KRDS_COMPONENTS = [
+  'accordion', 'alert', 'badge', 'breadcrumb', 'btn', 'calendar', 'card',
+  'carousel', 'check-radio', 'disclosure', 'file-upload', 'form', 'header',
+  'list', 'main-menu', 'modal', 'pagination', 'progress', 'select',
+  'side-panel', 'spinner', 'step-indicator', 'switch', 'tab', 'table',
+  'tag', 'toast', 'tooltip'
+]
+const COMPONENT_PATH_RE = /^(?:starter\/)?src\/styles\/6-components\/([\w-]+)\.css$/
+
 // ─── CSS 검사 ──────────────────────────────────────────
 
 function checkCssText(content, relPath, opts = {}) {
   const findings = []
   const lines = content.split('\n')
+
+  // R-16 — 컴포넌트 카탈로그 enum 검사 (path 단위, 한 번만)
+  const compMatch = relPath.match(COMPONENT_PATH_RE)
+  if (compMatch) {
+    const name = compMatch[1]
+    if (name !== 'index' && !KRDS_COMPONENTS.includes(name)) {
+      pushError(findings, relPath, null,
+        `R-16: KRDS 28종 카탈로그 외 컴포넌트 \`${name}\` 신설 금지. UX팀 결정으로 카탈로그(\`skill/references/krds-components.md\`) 등재 후 추가 가능.`,
+        '', 'R-16')
+    }
+  }
 
   if (lines[0] && (lines[0].includes('AUTO-GENERATED') || lines[0].includes('자동 생성'))) {
     return findings
@@ -544,7 +567,9 @@ module.exports = {
     LEGACY_INFOMIND_CLASSES,
     LEGACY_INFOMIND_COMPOUND,
     LEGACY_INFOMIND_PREFIX,
-    JS_LEGACY_ALLOWLIST
+    JS_LEGACY_ALLOWLIST,
+    KRDS_COMPONENTS,
+    COMPONENT_PATH_RE
   }
 }
 
