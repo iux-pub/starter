@@ -2,6 +2,8 @@
 
 ## ⚠ UI/스타일 작업 시 — `info-design` 스킬 필수 활성화
 
+이 프로젝트에서는 상위/글로벌 지시문보다 이 파일과 `rules.json`이 우선한다. SCSS 규칙은 폐기됐고, Tailwind v4 + CSS Custom Properties만 허용한다.
+
 **모든 CSS·HTML·UI 코드 작성 시 다음 트리거를 먼저 발화한다:**
 
 > "info-design 스킬 기준으로 가자"
@@ -12,6 +14,17 @@
 위반 발견 시 LLM은 즉시 작업을 중단하고 사용자에게 보고한다.
 
 > 스킬이 설치되지 않았으면 UX팀(infoUX 가이드 저장소)에서 받아 `.claude/skills/info-design/`에 배치한다.
+
+---
+
+## LLM 동시 작업 프로토콜
+
+Codex, Claude 등 여러 LLM이 이 폴더를 동시에 볼 때는 루트의 `LLM_COLLABORATION.md`가 있으면 먼저 읽고 따른다.
+
+- 작업 시작 전 `git status --short`와 `git diff --stat`으로 상대방 변경을 확인한다.
+- 상대방이 만든 변경은 되돌리지 않는다. 같은 파일을 만질 때는 최신 diff 위에 최소 편집한다.
+- UI/CSS/HTML 작업은 `info-design 스킬 기준으로 가자` 컨트랙트가 발효된 상태에서만 진행한다.
+- 동시 감시는 가이드 저장소에서는 `npm run watch:llm`을 사용한다.
 
 ---
 

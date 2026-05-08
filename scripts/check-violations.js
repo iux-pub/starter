@@ -200,9 +200,44 @@ function checkHtmlFile(filePath) {
   const lines = content.split('\n')
   const relPath = rel(filePath)
 
+  // 마크다운 파일은 코드 펜스 컨텍스트를 추적해 "교육적 반례" 펜스를 검사 제외한다.
+  // - 펜스 라벨이 bad/forbidden/diff/example-bad → skip
+  // - 펜스 직전 라인에 <!-- bad-example --> 또는 "금지"/"안 됨" 마커 → skip
+  // - frontmatter `lint-ignore: true` → 파일 전체 skip
+  const isMarkdown = filePath.endsWith('.md')
+  if (isMarkdown && /^---\s*\n[\s\S]*?\blint-ignore:\s*true\b[\s\S]*?\n---\s*\n/.test(content)) {
+    return
+  }
+  let inFence = false
+  let fenceSkip = false
+  const FENCE_RE = /^\s*```(\S*)\s*(.*)$/
+  const SKIP_LANG = /^(?:bad|forbidden|diff|example-bad|nope)$/i
+  const SKIP_META = /\b(?:bad|forbidden|nope|do-not|금지|안\s*됨)\b/i
+  const PRE_BAD_MARK = /<!--\s*(?:bad-example|forbidden|do-not)\s*-->|^\s*(?:나쁜|잘못된|금지)/i
+
   lines.forEach((line, i) => {
     const lineNum = i + 1
     const trimmed = line.trim()
+
+    // 마크다운 펜스 상태 갱신
+    if (isMarkdown) {
+      const m = line.match(FENCE_RE)
+      if (m) {
+        if (!inFence) {
+          inFence = true
+          const lang = m[1] || ''
+          const meta = m[2] || ''
+          const prev = (lines[i - 1] || '').trim()
+          fenceSkip = SKIP_LANG.test(lang) || SKIP_META.test(meta) || PRE_BAD_MARK.test(prev)
+        } else {
+          inFence = false
+          fenceSkip = false
+        }
+        return
+      }
+      if (inFence && fenceSkip) return
+    }
+
     if (!trimmed) return
 
     // 인라인 스타일 (CSS 변수 주입은 허용)
