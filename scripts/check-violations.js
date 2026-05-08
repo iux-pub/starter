@@ -236,6 +236,9 @@ function checkHtmlFile(filePath) {
         return
       }
       if (inFence && fenceSkip) return
+      // 마크다운 본문(펜스 밖)은 자연어 설명이므로 패턴 검사 자체를 skip.
+      // 진짜 위반은 코드 펜스 안에서만 검출한다.
+      if (!inFence) return
     }
 
     if (!trimmed) return
