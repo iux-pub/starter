@@ -43,6 +43,11 @@ function pushWarn(findings, file, line, message, code, ruleId) {
 
 const rel = (p) => path.relative(ROOT, p)
 
+function resolveProjectPath(filePath) {
+  if (!filePath) return ''
+  return path.isAbsolute(filePath) ? filePath : path.resolve(ROOT, filePath)
+}
+
 // ─── 패턴 정의 ────────────────────────────────────────
 
 // 1. SCSS 잔재 — info-design은 Tailwind v4 + CSS만 허용
@@ -349,12 +354,13 @@ function synthesizeFinalContent(payload) {
   const tool = payload.tool_name
   const input = payload.tool_input || {}
   const filePath = input.file_path || ''
+  const absPath = resolveProjectPath(filePath)
   let content = ''
 
   if (tool === 'Write') {
     content = input.content || ''
   } else if (tool === 'Edit') {
-    const base = filePath && fs.existsSync(filePath) ? fs.readFileSync(filePath, 'utf-8') : ''
+    const base = absPath && fs.existsSync(absPath) ? fs.readFileSync(absPath, 'utf-8') : ''
     if (input.replace_all) {
       content = base.split(input.old_string || '').join(input.new_string || '')
     } else {
@@ -362,7 +368,7 @@ function synthesizeFinalContent(payload) {
       content = idx === -1 ? base : (base.slice(0, idx) + (input.new_string || '') + base.slice(idx + (input.old_string || '').length))
     }
   } else if (tool === 'MultiEdit') {
-    let buf = filePath && fs.existsSync(filePath) ? fs.readFileSync(filePath, 'utf-8') : ''
+    let buf = absPath && fs.existsSync(absPath) ? fs.readFileSync(absPath, 'utf-8') : ''
     for (const e of (input.edits || [])) {
       if (e.replace_all) {
         buf = buf.split(e.old_string || '').join(e.new_string || '')
@@ -378,7 +384,7 @@ function synthesizeFinalContent(payload) {
   if (filePath.endsWith('.css')) kind = 'css'
   else if (filePath.endsWith('.html') || filePath.endsWith('.njk') || filePath.endsWith('.md')) kind = 'html'
 
-  return { content, filePath, kind, relPath: filePath ? rel(path.resolve(filePath)) : '' }
+  return { content, filePath, kind, relPath: absPath ? rel(absPath) : '' }
 }
 
 function runOnSynthesized(payload, opts = {}) {
