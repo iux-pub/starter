@@ -55,7 +55,7 @@ my-project/
 │   │   ├── 3-generic/reset.css  ← 1rem=10px 트릭 적용
 │   │   ├── 4-elements/          ← HTML 태그 베이스
 │   │   ├── 5-objects/           ← 레이아웃 (BEM)
-│   │   ├── 6-components/        ← KRDS UI 컴포넌트 22개 (BEM)
+│   │   ├── 6-components/        ← KRDS UI 컴포넌트 28종 (BEM)
 │   │   └── 7-utilities/
 │   ├── snippets/                ← 컴포넌트 마크업 예시
 │   └── js/

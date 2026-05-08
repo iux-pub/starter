@@ -59,7 +59,7 @@ src/
 │   ├── 3-generic/             # 리셋 (62.5% 트릭 포함)
 │   ├── 4-elements/            # HTML 태그 베이스
 │   ├── 5-objects/             # 레이아웃 패턴 (BEM)
-│   ├── 6-components/          # KRDS UI 컴포넌트 (BEM, ~22종)
+│   ├── 6-components/          # KRDS UI 컴포넌트 (BEM, 28종)
 │   └── 7-utilities/           # 유틸리티
 ├── snippets/                  # 컴포넌트 마크업 스니펫 (LLM 참조용)
 └── js/                        # JS
