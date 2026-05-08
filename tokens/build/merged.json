@@ -1489,15 +1489,15 @@
       },
       "button": {
         "primary-fill": {
-          "value": "{primitive.color.light.primary.60}",
+          "value": "{primitive.color.light.primary.50}",
           "type": "color"
         },
         "primary-fill-hover": {
-          "value": "{primitive.color.light.primary.70}",
+          "value": "{primitive.color.light.primary.60}",
           "type": "color"
         },
         "primary-fill-pressed": {
-          "value": "{primitive.color.light.primary.80}",
+          "value": "{primitive.color.light.primary.70}",
           "type": "color"
         },
         "secondary-fill": {
@@ -2329,15 +2329,15 @@
       },
       "button": {
         "primary-fill": {
-          "value": "{primitive.color.high-contrast.primary.60}",
+          "value": "{primitive.color.high-contrast.primary.50}",
           "type": "color"
         },
         "primary-fill-hover": {
-          "value": "{primitive.color.high-contrast.primary.70}",
+          "value": "{primitive.color.high-contrast.primary.60}",
           "type": "color"
         },
         "primary-fill-pressed": {
-          "value": "{primitive.color.high-contrast.primary.80}",
+          "value": "{primitive.color.high-contrast.primary.70}",
           "type": "color"
         },
         "secondary-fill": {
@@ -3513,6 +3513,7 @@
     }
   },
   "$meta": {
+    "generated": "2026-04-30T03:17:28.730Z",
     "source": {
       "krds": "tokens/krds-base.json (KRDS-uiux/krds-uiux v1.0.0)",
       "overrides": "tokens/infomind-overrides.json"

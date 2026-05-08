@@ -59,6 +59,7 @@ for (const [k, v] of Object.entries(overrides)) {
 }
 
 merged.$meta = {
+  generated: new Date().toISOString(),
   source: {
     krds: 'tokens/krds-base.json (KRDS-uiux/krds-uiux v1.0.0)',
     overrides: 'tokens/infomind-overrides.json'

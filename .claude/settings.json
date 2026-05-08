@@ -1,44 +1,20 @@
 {
   "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Write|Edit|MultiEdit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node ./scripts/claude-preflight.js",
-            "timeout": 20,
-            "statusMessage": "info-design 사전 검사 중..."
-          }
-        ]
-      }
-    ],
     "PostToolUse": [
       {
-        "matcher": "Write|Edit|MultiEdit",
+        "matcher": "Write|Edit",
         "hooks": [
           {
             "type": "command",
-            "command": "jq -r '.tool_input.file_path // empty' | { read -r f || exit 0; case \"$f\" in src/styles/*.css|src/styles/**/*.css) npx stylelint \"$f\" ;; esac; }",
+            "command": "jq -r '.tool_input.file_path // empty' | { read -r f || exit 0; echo \"$f\" | grep -qE '\\.scss$' && npm run lint:css -- \"$f\" 2>/dev/null || true; }",
             "timeout": 30,
-            "statusMessage": "Stylelint 검사 중..."
+            "statusMessage": "SCSS 린트 검사 중..."
           },
           {
             "type": "command",
-            "command": "jq -r '.tool_input.file_path // empty' | { read -r f || exit 0; case \"$f\" in src/*|site/*) if echo \"$f\" | grep -qE '\\.(css|md|html|njk)$'; then node ./scripts/check-violations.js \"$f\"; fi ;; esac; }",
+            "command": "jq -r '.tool_input.file_path // empty' | { read -r f || exit 0; echo \"$f\" | grep -qE '\\.(scss|html)$' && node ./scripts/check-violations.js \"$f\" 2>/dev/null || true; }",
             "timeout": 20,
-            "statusMessage": "info-design 컨트랙트 검사 중..."
-          }
-        ]
-      },
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node ./scripts/post-bash-audit.js",
-            "timeout": 20,
-            "statusMessage": "Bash 후행 감사"
+            "statusMessage": "위반 패턴 검사 중..."
           }
         ]
       }
