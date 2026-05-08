@@ -30,6 +30,17 @@
             "statusMessage": "info-design 컨트랙트 검사 중..."
           }
         ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ./scripts/post-bash-audit.js",
+            "timeout": 20,
+            "statusMessage": "Bash 후행 감사"
+          }
+        ]
       }
     ]
   }
