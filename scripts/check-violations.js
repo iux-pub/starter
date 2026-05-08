@@ -114,7 +114,7 @@ const LEGACY_INFOMIND_CLASSES = [
 ]
 // 복합 selector 패턴 (요소 + 클래스 결합)
 const LEGACY_INFOMIND_COMPOUND = [
-  /\bdl\.form\d?\b/,           // dl.form, dl.form2, dl.form3
+  /\bdl\.form\d?\b/, // dl.form, dl.form2, dl.form3
   /\b(?:button|a|input)?\.btn\.(?:main|sub)\b/,
   /\bbutton\.(?:main|sub)\b/
 ]
