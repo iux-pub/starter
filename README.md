@@ -18,7 +18,7 @@ git init
 git remote add origin https://github.com/YOUR_ORG/YOUR_REPO.git
 
 # 의존성 설치
-npm install --legacy-peer-deps
+npm install
 ```
 
 ### 2. 빌드
@@ -33,7 +33,7 @@ npm run watch:css   # 개발 시 CSS 변경 감지
 작업 시작 시 한 줄 발화:
 > **"info-design 스킬 기준으로 가자"**
 
-이 트리거 후 모든 CSS·HTML 코드 생성이 KRDS 토큰·INFOMIND 컴포넌트만 사용하도록 강제됩니다.
+이 트리거 후 모든 CSS·HTML 코드 생성이 INFOUX 토큰·INFOMIND 컴포넌트 패턴을 우선 사용하도록 강제됩니다.
 스킬은 `.claude/skills/info-design/`에 동봉되어 있어 자동 인식됩니다.
 
 ---
@@ -46,8 +46,7 @@ my-project/
 │   ├── SKILL.md
 │   └── references/
 ├── tokens/
-│   ├── krds-base.json           ← KRDS 정본 (수정 금지)
-│   ├── infomind-overrides.json  ← 프로젝트 결정 (수정 가능)
+│   ├── foundation.json          ← 색상 + 기본 폰트 단일 소스
 │   └── build/tokens.css         ← 자동 생성
 ├── src/
 │   ├── styles/
@@ -55,12 +54,12 @@ my-project/
 │   │   ├── 3-generic/reset.css  ← 1rem=10px 트릭 적용
 │   │   ├── 4-elements/          ← HTML 태그 베이스
 │   │   ├── 5-objects/           ← 레이아웃 (BEM)
-│   │   ├── 6-components/        ← KRDS UI 컴포넌트 22개 (BEM)
+│   │   ├── 6-components/        ← KRDS 원칙 기반 UI 컴포넌트 28개 (BEM)
 │   │   └── 7-utilities/
 │   ├── snippets/                ← 컴포넌트 마크업 예시
 │   └── js/
 ├── scripts/
-│   ├── build-tokens.js          ← KRDS 토큰 → CSS 변환
+│   ├── build-tokens.js          ← foundation 토큰 → CSS 변환
 │   └── check-violations.js      ← 컨트랙트 위반 검출
 └── dist/css/style.css           ← 빌드 산출물
 ```
@@ -71,12 +70,23 @@ my-project/
 
 | 명령 | 용도 |
 |------|------|
-| `npm run build:tokens` | KRDS + INFOMIND 토큰 → `tokens/build/tokens.css` |
+| `npm run build:tokens` | `tokens/foundation.json` → `tokens/build/tokens.css` |
 | `npm run build:css` | Tailwind v4 컴파일 → `dist/css/style.css` |
 | `npm run watch:css` | CSS 워치 모드 |
 | `npm run build` | 전체 빌드 (tokens + CSS) |
 | `npm run lint:css` | Stylelint 검사 |
 | `npm run check` | info-design 컨트랙트 위반 검출 |
+
+## 🧭 사이트 유형 판정
+
+AI로 화면을 생성하기 전에 프로젝트 유형을 먼저 판정합니다.
+
+| 유형 | 적용 기준 |
+|------|-----------|
+| 민간/기업 사이트 | KRDS의 접근성·구조 원칙을 우선 적용. 정부 상징/공식 배너는 생성하지 않음 |
+| 사내/CMS/관리자 | 업무 밀도와 반복 사용성을 우선. 간격·크기는 프로젝트 직접값 허용 |
+| 공공기관/정부 사이트 | 발주 요구와 운영기관 기준에 따라 공식 배너, 운영기관 식별자, 공공 푸터 링크 적용 여부 확인 |
+| 이커머스/프로모션 | 구매·전환 흐름을 우선하되 색상 토큰, 접근성, 시맨틱 구조는 유지 |
 
 ---
 
@@ -106,31 +116,32 @@ my-project/
 </article>
 ```
 
-### Tailwind 유틸리티 (KRDS 토큰 기반)
+### Tailwind 유틸리티
 
 ```html
-<div class="bg-primary text-text-inverse p-8 rounded-medium2 shadow-2">
-  bg-primary = KRDS primary-50
-  p-8        = KRDS spacing-8 (16px)
-  rounded-medium2 = KRDS radius-medium2 (6px)
+<div class="bg-primary text-text-inverse p-[2.4rem] rounded-[0.6rem]">
+  bg-primary = INFOUX primary
+  p-[2.4rem] = 프로젝트 직접값
+  rounded-[0.6rem] = 프로젝트 직접값
 </div>
 ```
 
-> ⚠ **`bg-red-500` `text-gray-700` 같은 raw 컬러 유틸리티 사용 금지.** KRDS 시맨틱 토큰만 허용됩니다.
+> ⚠ **Tailwind 기본 팔레트 raw 컬러 유틸리티 사용 금지.** `--color-*` 기반 색상만 허용됩니다.
 
 ---
 
 ## 🔧 프로젝트 커스터마이징
 
-### 브랜드 색상 추가
+### 브랜드 색상/기본 폰트 변경
 
-`tokens/infomind-overrides.json` 편집:
+`tokens/foundation.json` 편집:
 
 ```json
 {
-  "infomind-brand": {
-    "primary":      { "value": "#FF5733", "type": "color" },
-    "primary-text": { "value": "#FFFFFF", "type": "color" }
+  "font": {
+    "family": {
+      "sans": { "value": "'Pretendard GOV', system-ui, sans-serif" }
+    }
   }
 }
 ```
@@ -139,7 +150,7 @@ my-project/
 
 ### 새 컴포넌트 필요 시
 
-**임의 생성 금지.** UX팀에 신규 컴포넌트 제안 → 가이드 저장소에 추가 → starter sync.
+기존 컴포넌트 카탈로그를 먼저 확인한다. 카탈로그 밖 패턴은 프로젝트 필요성과 공통화 가능성을 판단해 UX팀 결정으로 확장한다.
 
 ---
 
@@ -148,11 +159,11 @@ my-project/
 전체 규정은 `.claude/skills/info-design/references/forbidden-patterns.md` 참조.
 
 - Raw hex/rgb/hsl 색상
-- Raw px (KRDS 스케일 외 — `p-[20px]` 같은 임의 값 금지)
-- Tailwind raw 컬러 유틸 (`bg-red-500`, `text-gray-700` 등)
+- Raw px/rem은 반복 패턴이면 토큰화 권장. 프로젝트 고유 레이아웃 값은 허용
+- Tailwind 기본 팔레트 raw 컬러 유틸
 - 옛 버튼 variant (`btn--ghost`, `btn--outline`, `btn--link`, `btn--sm`)
 - `:focus { outline: none }`
-- `<div onclick>` (시맨틱 HTML 사용)
+- `div/span 클릭 핸들러 패턴` (시맨틱 HTML 사용)
 - 이미지 `alt` 누락, 폼 `<label>` 누락
 
 빌드 시 `npm run check`이 위반 자동 검출합니다.
@@ -177,7 +188,7 @@ KRDS가 새 버전을 내거나 INFOMIND 결정이 바뀌면 UX팀이 가이드 
 ```bash
 # 새 버전 받기
 git pull upstream main  # upstream = iux-pub/starter
-npm install --legacy-peer-deps
+npm install
 npm run build
 ```
 
@@ -185,7 +196,7 @@ npm run build
 
 ## 🆘 문제 해결
 
-**빌드 실패** → `rm -rf node_modules && npm install --legacy-peer-deps`
+**빌드 실패** → `rm -rf node_modules && npm install`
 
 **iCloud Drive에서 hang** → 프로젝트를 iCloud 외부 위치로 이동 (`~/Documents/`가 아닌 `~/projects/` 같은 곳)
 
