@@ -4,6 +4,12 @@
 
 아래 체크리스트로 이 코드를 리뷰하라. 위반 항목을 구체적으로 지적하라.
 
+## 검증 환경
+
+- [ ] 프로젝트의 `package.json`, CI 설정, README에서 사용 가능한 `check`/`lint`/`build`/`test`/`a11y` 명령을 확인했는가
+- [ ] infoUX 하네스(`scripts/check-violations.js`, `scripts/check-html-structure.js`)가 있으면 실행했는가
+- [ ] 하네스가 없으면 변경 파일을 직접 스캔하고, 대체한 수동 검증 항목을 리뷰 결과에 명시했는가
+
 ## CSS 시스템 (R-03)
 
 - [ ] **SCSS 사용 없음** — `.scss` 파일, `@use`, `@forward`, `$variable` 모두 0건
@@ -44,6 +50,8 @@
 
 - [ ] 큰 영역은 `header/main/footer`, `main` 안은 `section > .container` 구조
 - [ ] HTML 컴포넌트화는 페이지 전체가 아니라 `main` 내부 section 단위
+- [ ] `main` 직계 자식은 `section`이고, 각 `section`은 `.container`를 직접 포함
+- [ ] 각 `section`은 heading 또는 `aria-labelledby`/`aria-label`로 접근 가능한 이름 제공
 - [ ] `<img>`에 `alt` 속성 (장식용은 `alt=""`)
 - [ ] 인터랙티브 요소에 `aria-label` 또는 텍스트 레이블
 - [ ] `div`/`span` 클릭 핸들러 패턴 없음 — `<button>`/`<a>` 시맨틱 HTML 사용
