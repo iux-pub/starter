@@ -2630,6 +2630,11 @@
       transform: translateX(0);
     }
   }
+  @media (prefers-reduced-motion: reduce) {
+    .toast {
+      animation: none;
+    }
+  }
   .toast__icon {
     display: flex;
     height: 2.4rem;
