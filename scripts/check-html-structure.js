@@ -6,7 +6,7 @@
 // R-17: 비-BEM 상태 클래스 (.is-*, .has-*)
 // R-18: 시각적 단어 modifier (--blue, --big, --rounded 등)
 //
-// 단일 소스: skill/references/html-semantics.md
+// 단일 소스: references/html-semantics.md
 // 종료 코드: 0 = 통과 또는 경고만, 2 = 오류
 //   STRICT=1 시 경고도 1로 실패 처리
 
@@ -430,6 +430,13 @@ function isPageLikeHtml(html) {
 
 function shouldCheckPageContract(html, filePath) {
   if (!isPageLikeHtml(html)) return false
+
+  // 플레이그라운드는 컴포넌트 하나만 띄우는 내부 데모다. page shell(헤더·본문·푸터·
+  // 건너뛰기 링크)을 요구할 대상이 아니며, check-violations.js도 같은 이유로 R-14를
+  // 면제한다. 명시적으로 파일을 넘겨받는 경로(pre-commit 훅)에서도 같게 판단해야
+  // 두 검사기가 어긋나지 않는다.
+  if (/\/src\/playground\//.test(filePath)) return false
+
   if (HAS_EXPLICIT_TARGETS) return true
 
   const relative = rel(filePath)
