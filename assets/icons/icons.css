@@ -1,0 +1,344 @@
+/**
+ * infoUX Icons — 폰트 여벌. **생성물이므로 직접 고치지 않는다.**
+ * 다시 만들기: npm run icons:build
+ *
+ * 기본 경로는 스프라이트이고 이 파일은 SVG를 못 받는 환경(일부 CMS 에디터·앱
+ * 웹뷰)을 위한 여벌이다. 폰트는 로드 실패 시 자리가 두부로 남고, 사용자가 폰트를
+ * 강제 치환하면 사라지며, 스크린리더가 PUA 코드포인트를 오독한다.
+ * 그래서 반드시 aria-hidden과 텍스트 라벨을 함께 둔다 (R-27).
+ *
+ *   <button class="btn">
+ *     <span class="icon-font icon-font--search" aria-hidden="true"></span>
+ *     검색
+ *   </button>
+ *
+ * 스프라이트 방식(권장): src/styles/6-components/icon.css의 .icon을 쓴다.
+ */
+
+@layer components {
+  @font-face {
+    font-family: "infoUX Icons";
+    src: url("./infoux-icons.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+  }
+
+  .icon-font {
+    @apply inline-block shrink-0 not-italic normal-case align-[-0.125em];
+
+    font-family: "infoUX Icons", sans-serif;
+    font-size: 2.4rem;
+    line-height: 1;
+    font-variant-ligatures: none;
+    speak: never;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* KRDS 사이즈 어휘 — .icon과 같은 이름을 쓴다 (R-06·R-18) */
+  .icon-font--xsmall { font-size: 1.6rem; }
+  .icon-font--small  { font-size: 2rem; }
+  .icon-font--medium { font-size: 2.4rem; }
+  .icon-font--large  { font-size: 3.2rem; }
+  .icon-font--xlarge { font-size: 4rem; }
+
+  /* 본문과 섞일 때 — 글자 크기를 그대로 따른다 */
+  .icon-font--inherit { font-size: 1em; }
+
+  .icon-font--chevron-left::before { content: "\E000"; }
+  .icon-font--chevron-right::before { content: "\E001"; }
+  .icon-font--chevron-up::before { content: "\E002"; }
+  .icon-font--chevron-down::before { content: "\E003"; }
+  .icon-font--arrow-left::before { content: "\E004"; }
+  .icon-font--arrow-right::before { content: "\E005"; }
+  .icon-font--arrow-up::before { content: "\E006"; }
+  .icon-font--arrow-down::before { content: "\E007"; }
+  .icon-font--menu::before { content: "\E008"; }
+  .icon-font--close::before { content: "\E009"; }
+  .icon-font--more-vertical::before { content: "\E00A"; }
+  .icon-font--external-link::before { content: "\E00B"; }
+  .icon-font--search::before { content: "\E00C"; }
+  .icon-font--filter::before { content: "\E00D"; }
+  .icon-font--download::before { content: "\E00E"; }
+  .icon-font--upload::before { content: "\E00F"; }
+  .icon-font--share::before { content: "\E010"; }
+  .icon-font--print::before { content: "\E011"; }
+  .icon-font--copy::before { content: "\E012"; }
+  .icon-font--edit::before { content: "\E013"; }
+  .icon-font--delete::before { content: "\E014"; }
+  .icon-font--add::before { content: "\E015"; }
+  .icon-font--refresh::before { content: "\E016"; }
+  .icon-font--save::before { content: "\E017"; }
+  .icon-font--settings::before { content: "\E018"; }
+  .icon-font--check::before { content: "\E019"; }
+  .icon-font--info::before { content: "\E01A"; }
+  .icon-font--warning::before { content: "\E01B"; }
+  .icon-font--error::before { content: "\E01C"; }
+  .icon-font--success::before { content: "\E01D"; }
+  .icon-font--help::before { content: "\E01E"; }
+  .icon-font--bell::before { content: "\E01F"; }
+  .icon-font--lock::before { content: "\E020"; }
+  .icon-font--unlock::before { content: "\E021"; }
+  .icon-font--calendar::before { content: "\E022"; }
+  .icon-font--clock::before { content: "\E023"; }
+  .icon-font--eye::before { content: "\E024"; }
+  .icon-font--eye-off::before { content: "\E025"; }
+  .icon-font--attachment::before { content: "\E026"; }
+  .icon-font--checkbox::before { content: "\E027"; }
+  .icon-font--radio::before { content: "\E028"; }
+  .icon-font--dropdown::before { content: "\E029"; }
+  .icon-font--minus::before { content: "\E02A"; }
+  .icon-font--drag-handle::before { content: "\E02B"; }
+  .icon-font--file::before { content: "\E02C"; }
+  .icon-font--folder::before { content: "\E02D"; }
+  .icon-font--image::before { content: "\E02E"; }
+  .icon-font--video::before { content: "\E02F"; }
+  .icon-font--document::before { content: "\E030"; }
+  .icon-font--list::before { content: "\E031"; }
+  .icon-font--grid::before { content: "\E032"; }
+  .icon-font--table::before { content: "\E033"; }
+  .icon-font--link::before { content: "\E034"; }
+  .icon-font--tag::before { content: "\E035"; }
+  .icon-font--user::before { content: "\E036"; }
+  .icon-font--users::before { content: "\E037"; }
+  .icon-font--building::before { content: "\E038"; }
+  .icon-font--phone::before { content: "\E039"; }
+  .icon-font--mail::before { content: "\E03A"; }
+  .icon-font--map-pin::before { content: "\E03B"; }
+  .icon-font--play::before { content: "\E03C"; }
+  .icon-font--pause::before { content: "\E03D"; }
+  .icon-font--volume::before { content: "\E03E"; }
+  .icon-font--fullscreen::before { content: "\E03F"; }
+  .icon-font--zoom-in::before { content: "\E040"; }
+  .icon-font--zoom-out::before { content: "\E041"; }
+  .icon-font--home::before { content: "\E042"; }
+  .icon-font--bookmark::before { content: "\E043"; }
+  .icon-font--star::before { content: "\E044"; }
+  .icon-font--chart-bar::before { content: "\E045"; }
+  .icon-font--globe::before { content: "\E046"; }
+  .icon-font--language::before { content: "\E047"; }
+  .icon-font--sitemap::before { content: "\E048"; }
+
+  /* slim — 73종. 가늘게. 큰 크기(32px 이상)나 옅은 보조 정보에 쓴다 — 작은 크기에서는 선이 끊겨 보인다 */
+  @font-face {
+    font-family: "infoUX Icons slim";
+    src: url("./infoux-icons-slim.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+  }
+
+  .icon-font--slim.icon-font--chevron-left,
+  .icon-font--slim.icon-font--chevron-right,
+  .icon-font--slim.icon-font--chevron-up,
+  .icon-font--slim.icon-font--chevron-down,
+  .icon-font--slim.icon-font--arrow-left,
+  .icon-font--slim.icon-font--arrow-right,
+  .icon-font--slim.icon-font--arrow-up,
+  .icon-font--slim.icon-font--arrow-down,
+  .icon-font--slim.icon-font--menu,
+  .icon-font--slim.icon-font--close,
+  .icon-font--slim.icon-font--more-vertical,
+  .icon-font--slim.icon-font--external-link,
+  .icon-font--slim.icon-font--search,
+  .icon-font--slim.icon-font--filter,
+  .icon-font--slim.icon-font--download,
+  .icon-font--slim.icon-font--upload,
+  .icon-font--slim.icon-font--share,
+  .icon-font--slim.icon-font--print,
+  .icon-font--slim.icon-font--copy,
+  .icon-font--slim.icon-font--edit,
+  .icon-font--slim.icon-font--delete,
+  .icon-font--slim.icon-font--add,
+  .icon-font--slim.icon-font--refresh,
+  .icon-font--slim.icon-font--save,
+  .icon-font--slim.icon-font--settings,
+  .icon-font--slim.icon-font--check,
+  .icon-font--slim.icon-font--info,
+  .icon-font--slim.icon-font--warning,
+  .icon-font--slim.icon-font--error,
+  .icon-font--slim.icon-font--success,
+  .icon-font--slim.icon-font--help,
+  .icon-font--slim.icon-font--bell,
+  .icon-font--slim.icon-font--lock,
+  .icon-font--slim.icon-font--unlock,
+  .icon-font--slim.icon-font--calendar,
+  .icon-font--slim.icon-font--clock,
+  .icon-font--slim.icon-font--eye,
+  .icon-font--slim.icon-font--eye-off,
+  .icon-font--slim.icon-font--attachment,
+  .icon-font--slim.icon-font--checkbox,
+  .icon-font--slim.icon-font--radio,
+  .icon-font--slim.icon-font--dropdown,
+  .icon-font--slim.icon-font--minus,
+  .icon-font--slim.icon-font--drag-handle,
+  .icon-font--slim.icon-font--file,
+  .icon-font--slim.icon-font--folder,
+  .icon-font--slim.icon-font--image,
+  .icon-font--slim.icon-font--video,
+  .icon-font--slim.icon-font--document,
+  .icon-font--slim.icon-font--list,
+  .icon-font--slim.icon-font--grid,
+  .icon-font--slim.icon-font--table,
+  .icon-font--slim.icon-font--link,
+  .icon-font--slim.icon-font--tag,
+  .icon-font--slim.icon-font--user,
+  .icon-font--slim.icon-font--users,
+  .icon-font--slim.icon-font--building,
+  .icon-font--slim.icon-font--phone,
+  .icon-font--slim.icon-font--mail,
+  .icon-font--slim.icon-font--map-pin,
+  .icon-font--slim.icon-font--play,
+  .icon-font--slim.icon-font--pause,
+  .icon-font--slim.icon-font--volume,
+  .icon-font--slim.icon-font--fullscreen,
+  .icon-font--slim.icon-font--zoom-in,
+  .icon-font--slim.icon-font--zoom-out,
+  .icon-font--slim.icon-font--home,
+  .icon-font--slim.icon-font--bookmark,
+  .icon-font--slim.icon-font--star,
+  .icon-font--slim.icon-font--chart-bar,
+  .icon-font--slim.icon-font--globe,
+  .icon-font--slim.icon-font--language,
+  .icon-font--slim.icon-font--sitemap {
+    font-family: "infoUX Icons slim", "infoUX Icons", sans-serif;
+  }
+
+  /* bold — 73종. 강조. 레귤러에서 한 칸만 굵다 — 버튼·헤더처럼 눈이 먼저 닿아야 하는 자리 */
+  @font-face {
+    font-family: "infoUX Icons bold";
+    src: url("./infoux-icons-bold.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+  }
+
+  .icon-font--bold.icon-font--chevron-left,
+  .icon-font--bold.icon-font--chevron-right,
+  .icon-font--bold.icon-font--chevron-up,
+  .icon-font--bold.icon-font--chevron-down,
+  .icon-font--bold.icon-font--arrow-left,
+  .icon-font--bold.icon-font--arrow-right,
+  .icon-font--bold.icon-font--arrow-up,
+  .icon-font--bold.icon-font--arrow-down,
+  .icon-font--bold.icon-font--menu,
+  .icon-font--bold.icon-font--close,
+  .icon-font--bold.icon-font--more-vertical,
+  .icon-font--bold.icon-font--external-link,
+  .icon-font--bold.icon-font--search,
+  .icon-font--bold.icon-font--filter,
+  .icon-font--bold.icon-font--download,
+  .icon-font--bold.icon-font--upload,
+  .icon-font--bold.icon-font--share,
+  .icon-font--bold.icon-font--print,
+  .icon-font--bold.icon-font--copy,
+  .icon-font--bold.icon-font--edit,
+  .icon-font--bold.icon-font--delete,
+  .icon-font--bold.icon-font--add,
+  .icon-font--bold.icon-font--refresh,
+  .icon-font--bold.icon-font--save,
+  .icon-font--bold.icon-font--settings,
+  .icon-font--bold.icon-font--check,
+  .icon-font--bold.icon-font--info,
+  .icon-font--bold.icon-font--warning,
+  .icon-font--bold.icon-font--error,
+  .icon-font--bold.icon-font--success,
+  .icon-font--bold.icon-font--help,
+  .icon-font--bold.icon-font--bell,
+  .icon-font--bold.icon-font--lock,
+  .icon-font--bold.icon-font--unlock,
+  .icon-font--bold.icon-font--calendar,
+  .icon-font--bold.icon-font--clock,
+  .icon-font--bold.icon-font--eye,
+  .icon-font--bold.icon-font--eye-off,
+  .icon-font--bold.icon-font--attachment,
+  .icon-font--bold.icon-font--checkbox,
+  .icon-font--bold.icon-font--radio,
+  .icon-font--bold.icon-font--dropdown,
+  .icon-font--bold.icon-font--minus,
+  .icon-font--bold.icon-font--drag-handle,
+  .icon-font--bold.icon-font--file,
+  .icon-font--bold.icon-font--folder,
+  .icon-font--bold.icon-font--image,
+  .icon-font--bold.icon-font--video,
+  .icon-font--bold.icon-font--document,
+  .icon-font--bold.icon-font--list,
+  .icon-font--bold.icon-font--grid,
+  .icon-font--bold.icon-font--table,
+  .icon-font--bold.icon-font--link,
+  .icon-font--bold.icon-font--tag,
+  .icon-font--bold.icon-font--user,
+  .icon-font--bold.icon-font--users,
+  .icon-font--bold.icon-font--building,
+  .icon-font--bold.icon-font--phone,
+  .icon-font--bold.icon-font--mail,
+  .icon-font--bold.icon-font--map-pin,
+  .icon-font--bold.icon-font--play,
+  .icon-font--bold.icon-font--pause,
+  .icon-font--bold.icon-font--volume,
+  .icon-font--bold.icon-font--fullscreen,
+  .icon-font--bold.icon-font--zoom-in,
+  .icon-font--bold.icon-font--zoom-out,
+  .icon-font--bold.icon-font--home,
+  .icon-font--bold.icon-font--bookmark,
+  .icon-font--bold.icon-font--star,
+  .icon-font--bold.icon-font--chart-bar,
+  .icon-font--bold.icon-font--globe,
+  .icon-font--bold.icon-font--language,
+  .icon-font--bold.icon-font--sitemap {
+    font-family: "infoUX Icons bold", "infoUX Icons", sans-serif;
+  }
+
+  /* fill — 41종. 선택·활성 상태. 굵기는 레귤러와 같아 나란히 놓아도 무게가 흔들리지 않는다 */
+  @font-face {
+    font-family: "infoUX Icons fill";
+    src: url("./infoux-icons-fill.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+  }
+
+  .icon-font--fill.icon-font--filter,
+  .icon-font--fill.icon-font--share,
+  .icon-font--fill.icon-font--print,
+  .icon-font--fill.icon-font--copy,
+  .icon-font--fill.icon-font--edit,
+  .icon-font--fill.icon-font--delete,
+  .icon-font--fill.icon-font--save,
+  .icon-font--fill.icon-font--settings,
+  .icon-font--fill.icon-font--info,
+  .icon-font--fill.icon-font--warning,
+  .icon-font--fill.icon-font--error,
+  .icon-font--fill.icon-font--success,
+  .icon-font--fill.icon-font--help,
+  .icon-font--fill.icon-font--bell,
+  .icon-font--fill.icon-font--lock,
+  .icon-font--fill.icon-font--unlock,
+  .icon-font--fill.icon-font--calendar,
+  .icon-font--fill.icon-font--clock,
+  .icon-font--fill.icon-font--eye,
+  .icon-font--fill.icon-font--eye-off,
+  .icon-font--fill.icon-font--checkbox,
+  .icon-font--fill.icon-font--file,
+  .icon-font--fill.icon-font--folder,
+  .icon-font--fill.icon-font--image,
+  .icon-font--fill.icon-font--video,
+  .icon-font--fill.icon-font--document,
+  .icon-font--fill.icon-font--grid,
+  .icon-font--fill.icon-font--table,
+  .icon-font--fill.icon-font--tag,
+  .icon-font--fill.icon-font--user,
+  .icon-font--fill.icon-font--users,
+  .icon-font--fill.icon-font--phone,
+  .icon-font--fill.icon-font--mail,
+  .icon-font--fill.icon-font--map-pin,
+  .icon-font--fill.icon-font--play,
+  .icon-font--fill.icon-font--pause,
+  .icon-font--fill.icon-font--volume,
+  .icon-font--fill.icon-font--home,
+  .icon-font--fill.icon-font--bookmark,
+  .icon-font--fill.icon-font--star,
+  .icon-font--fill.icon-font--sitemap {
+    font-family: "infoUX Icons fill", "infoUX Icons", sans-serif;
+  }
+}

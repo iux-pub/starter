@@ -5,6 +5,7 @@
 // R-16: 인터랙티브 컴포넌트의 필수 ARIA 속성 누락
 // R-17: 비-BEM 상태 클래스 (.is-*, .has-*)
 // R-18: 시각적 단어 modifier (--blue, --big, --rounded 등)
+// R-25: 섹션 리듬 — 동일 archetype 3연속·카드 중첩·카드 그리드 남발
 //
 // 단일 소스: references/html-semantics.md
 // 종료 코드: 0 = 통과 또는 경고만, 2 = 오류
@@ -81,11 +82,14 @@ const COMPONENT_ROOT_MAPPING = {
   // 그룹 C — 내비게이션
   'breadcrumb': { allowedTags: ['nav'], requireAriaLabel: true, note: 'nav에 aria-label="페이지 경로"' },
   'site-header': { allowedTags: ['header'], note: '사이트 헤더' },
+  'site-footer': { allowedTags: ['footer'], note: '페이지 shell의 footer#footer 랜드마크' },
   'main-menu': { allowedTags: ['nav'], requireAriaLabel: true, note: 'nav에 aria-label="주 메뉴"' },
+  'mobile-menu': { allowedTags: ['div', 'dialog'], note: 'div 사용 시 role="dialog" aria-modal="true" aria-labelledby 필수' },
   'pagination': { allowedTags: ['nav'], requireAriaLabel: true, note: 'nav에 aria-label="페이지 내비게이션"' },
 
   // 그룹 D — 피드백
   'alert': { allowedTags: ['div'], requireRoleAlertOrStatus: true, note: 'role="alert" 또는 role="status"' },
+  'notice-bar': { allowedTags: ['section'], requireAriaLabel: true, note: 'section에 aria-label="사이트 공지" — 라이브 영역(role/aria-live)은 쓰지 않는다' },
   'badge': { allowedTags: ['span'], note: 'dot(텍스트 없음)은 aria-label 필수' },
   'progress': { allowedTags: ['div'], note: '내부 progress 또는 div[role=progressbar]' },
   'spinner': { allowedTags: ['span'], requireRoleStatus: true, note: 'role="status" + aria-label' },
@@ -100,6 +104,7 @@ const COMPONENT_ROOT_MAPPING = {
   'calendar': { allowedTags: ['div'], requireRoleApplication: true, note: 'role="application" aria-label' },
   'carousel': { allowedTags: ['div'], requireAriaRoledescription: true, note: 'aria-roledescription="carousel" aria-label' },
   'list': { allowedTags: ['ul', 'ol', 'dl'], note: '의미에 따라 ul/ol/dl' },
+  'error-page': { allowedTags: ['div'], note: 'main > section > .container 안의 컴포넌트 루트. h1은 오류 제목 하나' },
   'table-wrap': { allowedTags: ['div'], note: '반응형 스크롤 래퍼' },
   'table': { allowedTags: ['table'], note: 'caption 또는 aria-label 필수' }
 }
@@ -136,6 +141,14 @@ const REQUIRED_ARIA = {
   'main-menu': {
     requireAll: [/aria-label=/],
     desc: 'aria-label (메뉴 설명)'
+  },
+  'mobile-menu': {
+    requireAll: ['role="dialog"', 'aria-modal="true"', /aria-labelledby=|aria-label=/],
+    desc: 'role="dialog" + aria-modal="true" + aria-labelledby/aria-label'
+  },
+  'notice-bar': {
+    requireAll: [/aria-label=/],
+    desc: 'aria-label (공지 영역 이름)'
   },
   'pagination': {
     requireAll: [/aria-label=/],
@@ -184,6 +197,26 @@ const FORBIDDEN_MODIFIER_RE = new RegExp(
   `\\b([a-z][\\w-]*?)--(${FORBIDDEN_MODIFIER_WORDS.join('|')})\\b`,
   'g'
 )
+
+// 블록별 예외 — 그 블록에서는 정의된 축 이름이라 시각적 작명이 아니다.
+//
+// 아이콘의 icon-font--bold는 font-weight: bold와 같은 성격이다. 굵기 축의 이름이
+// 계약(icon-contract.json)에 값으로 박혀 있고 폰트 파일이 그 이름으로 갈린다.
+// 목록을 여기 적지 않고 계약에서 읽는 이유: 축이 바뀌면 예외도 같이 움직여야 한다.
+// 계약에 없는 이름은 그대로 걸린다.
+const ALLOWED_MODIFIER_BY_BLOCK = (() => {
+  const map = new Map()
+  try {
+    const contract = JSON.parse(
+      fs.readFileSync(path.join(__dirname, '..', 'contracts/icon-contract.json'), 'utf8')
+    )
+    const ids = (contract.variants?.combinations || []).map((c) => c.id)
+    if (ids.length > 0) map.set('icon-font', new Set(ids))
+  } catch {
+    // 계약이 없으면 예외도 없다 — 금지어가 그대로 적용된다
+  }
+  return map
+})()
 
 // ─── HTML 코드 블록 추출 ────────────────────────────────────
 // Markdown 파일에서 ```html 블록 추출
@@ -421,6 +454,151 @@ function checkAccordionPattern(root, filePath, baseLineNum) {
   }
 }
 
+// ─── R-16: disclosure 내비게이션 (메가·드롭다운 토글, 모바일 메뉴 햄버거) ───
+// 링크 목록을 열고 닫는 버튼은 disclosure 패턴이다 — aria-expanded + aria-controls.
+// role="menu"/aria-haspopup 은 애플리케이션 메뉴 위젯 선언이라 화살표 키 운용을 기대하게 만든다.
+
+function checkDisclosureNavPattern(root, filePath, baseLineNum) {
+  const toggles = findNodes(root, node => hasClass(node, 'main-menu__toggle'))
+
+  for (const toggle of toggles) {
+    const controls = toggle.attrs['aria-controls']
+    if (toggle.tag !== 'button' || !['true', 'false'].includes(toggle.attrs['aria-expanded']) || !controls || !findById(root, controls)) {
+      error(
+        rel(filePath),
+        nodeLine(baseLineNum, toggle),
+        '[R-16] main-menu__toggle 은 button이며 aria-expanded="true|false", aria-controls와 유효한 패널 id가 필요합니다.',
+        toggle.raw.slice(0, 120),
+        'R-16'
+      )
+    }
+    if (toggle.attrs['aria-haspopup'] || toggle.attrs.role === 'menu') {
+      warn(
+        rel(filePath),
+        nodeLine(baseLineNum, toggle),
+        '[R-16] disclosure 토글에 aria-haspopup/role="menu"를 쓰지 않습니다. 링크 목록을 여는 버튼은 aria-expanded + aria-controls만으로 충분합니다.',
+        toggle.raw.slice(0, 120),
+        'R-16'
+      )
+    }
+  }
+
+  // 모바일 메뉴 햄버거: aria-expanded 와 aria-controls(= data-mobile-menu-open 값)가 짝이어야 한다.
+  // 패널은 헤더 바깥에 있어 같은 코드 블록에 없을 수 있으므로 패널 존재는 요구하지 않는다.
+  const openers = findNodes(root, node => node.attrs['data-mobile-menu-open'] !== undefined)
+  for (const opener of openers) {
+    const target = opener.attrs['data-mobile-menu-open']
+    if (
+      opener.tag !== 'button' ||
+      !['true', 'false'].includes(opener.attrs['aria-expanded']) ||
+      !target ||
+      opener.attrs['aria-controls'] !== target
+    ) {
+      error(
+        rel(filePath),
+        nodeLine(baseLineNum, opener),
+        '[R-16] 모바일 메뉴 햄버거는 button이며 aria-expanded="true|false"와, data-mobile-menu-open 값과 같은 aria-controls가 필요합니다.',
+        opener.raw.slice(0, 120),
+        'R-16'
+      )
+    }
+  }
+}
+
+// ─── R-25: 섹션 리듬 ────────────────────────────────────────
+// "중앙 제목 + 카드 그리드" 반복이 규정 준수형 무개성의 최빈 패턴이다.
+// ① 형제 section 시퀀스에서 동일 archetype(section--X) 3연속 — error
+// ② .card 내부 .card 중첩 — error
+// ③ 카드 그리드 섹션(같은 부모 아래 직계 .card 3개 이상)이 페이지당 3개 이상 또는 연속 배치 — warn
+// 대체 패턴 공급: src/styles/5-objects/section-media.css·hero-bleed.css + src/snippets/signature.md
+
+function sectionArchetype(section) {
+  const modifier = classList(section).find(name => /^section--[\w-]+$/.test(name))
+  return modifier ? modifier.slice('section--'.length) : null
+}
+
+function isCardGridSection(section) {
+  return findNodes(section, node =>
+    directElementChildren(node).filter(child => hasClass(child, 'card')).length >= 3
+  ).length > 0
+}
+
+function checkSectionRhythm(root, filePath, baseLineNum) {
+  // ② 카드 중첩 — 위치 무관 전역 검사
+  for (const card of findNodes(root, node => hasClass(node, 'card'))) {
+    if (ancestor(card, node => hasClass(node, 'card'))) {
+      error(
+        rel(filePath),
+        nodeLine(baseLineNum, card),
+        '[R-25] 카드 안에 카드를 중첩하지 마세요. 내부 콘텐츠는 목록·정의형 마크업으로 평탄화합니다.',
+        card.raw.slice(0, 120),
+        'R-25'
+      )
+    }
+  }
+
+  // 형제 section 시퀀스 단위로 리듬을 판정한다 (main 직계 포함, 래퍼 무관)
+  const parents = findNodes(root, node =>
+    (node.children || []).filter(child => child.tag === 'section').length > 0)
+
+  const gridSections = []
+  for (const parent of parents) {
+    const sections = directElementChildren(parent).filter(child => child.tag === 'section')
+
+    // ① 동일 archetype 3연속
+    let streakName = null
+    let streak = 0
+    for (const section of sections) {
+      const archetype = sectionArchetype(section)
+      if (archetype && archetype === streakName) {
+        streak++
+      } else {
+        streakName = archetype
+        streak = archetype ? 1 : 0
+      }
+      if (streak >= 3) {
+        error(
+          rel(filePath),
+          nodeLine(baseLineNum, section),
+          `[R-25] 동일 archetype "section--${archetype}" 3연속 — 연속 상한은 2입니다. section-media(이미지-텍스트 교차)·hero-bleed(풀블리드 인트로) 같은 변주 패턴을 사이에 끼우세요.`,
+          section.raw.slice(0, 120),
+          'R-25'
+        )
+        streakName = null
+        streak = 0
+      }
+    }
+
+    // ③ 카드 그리드 섹션 — 연속 배치 판정 (형제 시퀀스 기준)
+    let prevWasGrid = false
+    for (const section of sections) {
+      const grid = isCardGridSection(section)
+      if (grid) gridSections.push(section)
+      if (grid && prevWasGrid) {
+        warn(
+          rel(filePath),
+          nodeLine(baseLineNum, section),
+          '[R-25] 카드 그리드 섹션이 연속 배치됐습니다. 사이에 section-media 같은 변주 패턴이나 목록·표 섹션을 끼우세요.',
+          section.raw.slice(0, 120),
+          'R-25'
+        )
+      }
+      prevWasGrid = grid
+    }
+  }
+
+  // ③ 카드 그리드 섹션 페이지당 3개 이상
+  if (gridSections.length > 2) {
+    warn(
+      rel(filePath),
+      nodeLine(baseLineNum, gridSections[2]),
+      `[R-25] 카드 그리드 섹션이 페이지당 ${gridSections.length}개 — 2개 이하를 권장합니다. 카드가 아니어도 되는 콘텐츠는 목록·표로 풉니다.`,
+      gridSections[2].raw.slice(0, 120),
+      'R-25'
+    )
+  }
+}
+
 function isPageLikeHtml(html) {
   return /<!doctype html/i.test(html) ||
     /<body\b/i.test(html) ||
@@ -606,6 +784,8 @@ function checkHtml(html, filePath, baseLineNum = 1) {
   checkFormLabels(root, filePath, baseLineNum)
   checkTabPattern(root, filePath, baseLineNum)
   checkAccordionPattern(root, filePath, baseLineNum)
+  checkDisclosureNavPattern(root, filePath, baseLineNum)
+  checkSectionRhythm(root, filePath, baseLineNum)
 
   // R-17: 비-BEM 상태 클래스
   lines.forEach((line, idx) => {
@@ -632,6 +812,7 @@ function checkHtml(html, filePath, baseLineNum = 1) {
       const lineNum = baseLineNum + idx
       const block = m[1]
       const word = m[2]
+      if (ALLOWED_MODIFIER_BY_BLOCK.get(block)?.has(word)) continue
       error(
         rel(filePath),
         lineNum,
@@ -646,8 +827,12 @@ function checkHtml(html, filePath, baseLineNum = 1) {
   for (const [blockName, mapping] of Object.entries(COMPONENT_ROOT_MAPPING)) {
     const matches = findClassUsage(html, blockName)
     for (const match of matches) {
-      // class 안에 element ('__')나 modifier ('--') 포함된 건 root가 아니므로 스킵
-      const isBlockRoot = new RegExp(`class\\s*=\\s*["'][^"']*\\b${blockName.replace(/-/g, '\\-')}(?![_-])`).test(match.fullMatch)
+      // class를 토큰으로 쪼개 정확히 비교한다. 부분 문자열로 보면 다른 블록의 modifier가
+      // 걸린다 — icon-font--calendar가 calendar 컴포넌트로 잡혔다(2026-08-23).
+      // element('__')나 다른 블록의 modifier는 root가 아니므로 자연히 빠진다.
+      const classAttr = match.fullMatch.match(/class\s*=\s*["']([^"']*)["']/)
+      const tokens = classAttr ? classAttr[1].trim().split(/\s+/) : []
+      const isBlockRoot = tokens.some((t) => t === blockName || t.startsWith(`${blockName}--`))
       if (!isBlockRoot) continue
 
       // R-15: root 태그 점검

@@ -1,13 +1,16 @@
 #!/usr/bin/env node
 
 // check-violations.js — info-design 컨트랙트 자동 검출
-// raw 색상, 옛 시스템 흔적, 옛 variant, SCSS 잔재, 접근성 누락 검출.
+// raw 색상, 옛 시스템 흔적, 옛 variant, SCSS 잔재, 접근성 누락,
+// 가짜 콘텐츠(R-23), 한글 조판 하한(R-24) 검출.
 //
 // 종료 코드: 0 = 통과 또는 경고만, 2 = 오류
 //   STRICT=1 환경변수 설정 시 경고도 1로 실패 처리
 
 const fs = require('fs')
 const path = require('path')
+const { loadTokenSource } = require('./lib/token-source')
+const { buildTokensCss } = require('./lib/build-tokens-css')
 
 const ROOT = path.resolve(__dirname, '..')
 const STYLES_DIR = path.join(ROOT, 'src/styles')
@@ -116,7 +119,57 @@ const INLINE_STYLE_CUSTOM_PROP = /\bstyle\s*=\s*["'][^"']*--[\w-]+:[^"']*["']/
 const MISSING_ALT = /<img(?![^>]*\balt\s*=)[^>]*\bsrc\s*=[^>]*>/
 const CLICK_ON_DIV = /<(?:div|span)[^>]+onclick/
 
+// 11. 가짜 콘텐츠 (R-23) — 시안·납품물에 채움 콘텐츠 잔존 금지
+//   placeholder 핫링크는 외부 서비스 의존이라 납품 self-contained 정책과 이중 실격이다.
+const FAKE_LOREM = /lorem\s+ipsum/i
+const FAKE_FILLER_KO = /(내용|텍스트|설명)[이가]?\s*(여기에\s*)?들어갑니다/
+const FAKE_IMG_HOTLINK = /(placehold\.co|via\.placeholder\.com|picsum\.photos|placekitten|dummyimage\.com|source\.unsplash\.com|loremflickr)/i
+
+// 12. 한글 조판 하한 (R-24) — 임계값 정본은 contracts/art-direction.json hangul.bodyLineHeight.lintFloor.
+//   단위 테스트(naturalness.test.js)가 아래 상수와 lintFloor의 동일성을 강제한다.
+const HANGUL_LINE_HEIGHT_FLOOR = 1.5
+const KEEP_ALL_DECL = /word-break\s*:\s*keep-all/
+const LEADING_NONE = /\bleading-none\b/
+const LINE_HEIGHT_DECL = /(?:^|[^-\w])line-height\s*:\s*(\d*\.?\d+)\s*(?:[;}\]]|$)/
+// 단행(한 줄 고정) 컴포넌트는 낮은 line-height가 정상이다 — 하한 검사 예외 파일 목록
+const R24_EXEMPT_CSS = /(?:^|\/)(?:badge|tag|btn)\.css$/
+
 // ─── 검사 함수 ────────────────────────────────────────
+
+// 토큰 이름이 지켜야 하는 접두 — 이 접두의 var(--…)는 토큰 소스에 실제로 있어야 한다.
+// 문서의 표기가 틀렸거나 이름을 지어내도 var() 형식은 맞으므로 R-01 만으로는 통과한다.
+// 그러면 값이 비어 렌더만 조용히 깨진다(2026-10-05 공지 띠: --color-info-60 은 없고 --color-information-60 이 실제).
+const TOKEN_NAMESPACES = /^--(?:color|font|breakpoint)-/
+const VAR_REF = /var\(\s*(--[a-z0-9-]+)\s*([,)])/gi
+let definedTokensCache = null
+
+/** 토큰 소스에서 만든 CSS 의 정의 + src/styles 안의 지역 선언을 합친 집합 */
+function getDefinedTokens() {
+  if (definedTokensCache) return definedTokensCache
+  const defined = new Set()
+  try {
+    const css = buildTokensCss(loadTokenSource(ROOT))
+    for (const m of css.matchAll(/(--[a-z0-9-]+)\s*:/gi)) defined.add(m[1])
+  } catch {
+    // 토큰 소스를 못 읽으면 이 검사만 건너뛴다(null). 다른 검사는 계속한다.
+    definedTokensCache = null
+    return null
+  }
+  const stack = [STYLES_DIR]
+  while (stack.length) {
+    const dir = stack.pop()
+    if (!fs.existsSync(dir)) continue
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, entry.name)
+      if (entry.isDirectory()) stack.push(full)
+      else if (entry.name.endsWith('.css')) {
+        for (const m of fs.readFileSync(full, 'utf-8').matchAll(/(--[a-z0-9-]+)\s*:/gi)) defined.add(m[1])
+      }
+    }
+  }
+  definedTokensCache = defined
+  return defined
+}
 
 function checkCssFile(filePath) {
   const content = fs.readFileSync(filePath, 'utf-8')
@@ -139,6 +192,9 @@ function checkCssFile(filePath) {
     error(relPath, null, '[R-19] 스타일 CSS는 Tailwind v4 @apply를 우선 사용해야 한다. 토큰이 필요한 값은 var(--token)으로 유지하되 레이아웃/상태 유틸은 @apply로 작성.')
   }
 
+  // 이 파일 안에서 직접 선언한 커스텀 프로퍼티는 정의된 것으로 본다
+  const localDeclared = new Set([...content.matchAll(/(--[a-z0-9-]+)\s*:/gi)].map(m => m[1]))
+
   lines.forEach((line, i) => {
     const lineNum = i + 1
     const trimmed = line.replace(/\/\*.*?\*\//g, '').trim()
@@ -153,6 +209,16 @@ function checkCssFile(filePath) {
     }
     if (SCSS_VAR.test(trimmed)) {
       error(relPath, lineNum, '[R-03] SCSS 변수 ($var) 금지. CSS 커스텀 프로퍼티 사용.', trimmed)
+    }
+
+    // 정의되지 않은 토큰 참조 (R-01) — 대체값(var(--x, 값))이 있으면 없을 수 있음을 알고 쓴 것이므로 넘긴다
+    const defined = getDefinedTokens()
+    if (defined) {
+      for (const m of trimmed.matchAll(VAR_REF)) {
+        const name = m[1]
+        if (m[2] === ',' || !TOKEN_NAMESPACES.test(name) || defined.has(name) || localDeclared.has(name)) continue
+        error(relPath, lineNum, `[R-01] 정의되지 않은 토큰 var(${name}). tokens/ 에 없는 이름이다 — get_tokens 문서가 아니라 tokens/build/tokens.css 의 실제 이름을 확인한다.`, trimmed)
+      }
     }
 
     // 옛 토큰명 — info-design 컨트랙트 점검 (R-01: 토큰 시스템)
@@ -207,6 +273,12 @@ function checkCssFile(filePath) {
     if (bemMatch) {
       error(relPath, lineNum, `[R-05] BEM 2단계 element 중첩 금지: .${bemMatch[1]}__${bemMatch[2]}__${bemMatch[3]}`, trimmed)
     }
+
+    // 한글 본문 조판 하한 (R-24) — 단행 컴포넌트(badge·tag·btn) 파일은 예외
+    const lhMatch = trimmed.match(LINE_HEIGHT_DECL)
+    if (lhMatch && parseFloat(lhMatch[1]) < HANGUL_LINE_HEIGHT_FLOOR && !R24_EXEMPT_CSS.test(filePath)) {
+      warn(relPath, lineNum, `[R-24] line-height ${lhMatch[1]} — 한글 조판 하한 ${HANGUL_LINE_HEIGHT_FLOOR} 미만. 본문 1.6~1.7, 제목 1.2~1.45 기준은 contracts/art-direction.json hangul 참조.`, trimmed)
+    }
   })
 
   // focus outline none 패턴 (R-11) — 멀티라인 스캔
@@ -223,12 +295,20 @@ function checkCssFile(filePath) {
     const animLine = lines.findIndex(l => CSS_ANIMATION.test(l) || CSS_KEYFRAMES.test(l))
     warn(relPath, animLine + 1, '[R-22] animation/@keyframes 사용 파일에 @media (prefers-reduced-motion: reduce) 가드가 없다. 모션 최소화 선호 시 애니메이션을 축소·정지해야 한다.', '')
   }
+
+  // R-24 ①: 본문 조판 기본값을 소유한 reset 계층 — word-break: keep-all 존재 필수 (파일 단위 멀티라인 스캔)
+  //   한글 단어 중간 줄바꿈을 막는 기본값은 3-generic/reset.css 소유다. 빠지면 파생 사이트 전체가 깨진다.
+  if (/3-generic\/reset\.css$/.test(filePath) && !KEEP_ALL_DECL.test(contentNoComments)) {
+    error(relPath, null, '[R-24] reset 계층에 word-break: keep-all이 없다. 한글 조판 기본값(keep-all + overflow-wrap: break-word)은 3-generic/reset.css가 소유한다.', '')
+  }
 }
 
 // 의도적으로 잘못된 예시(❌ 금지)를 포함하는 자동 생성 문서 — 검사 제외
 const HTML_SKIP_PATTERNS = [
   /\/site\/conventions\//, // rules.json → build:rules가 생성한 규칙 문서
-  /\/site\/accessibility\// // 접근성 가이드 — "Don't" 예시 포함
+  /\/site\/accessibility\//, // 접근성 가이드 — "Don't" 예시 포함
+  /\/site\/design\//, // 디자인 기준 문서 — microcopy "잘못된 예" 표 등 의도적 반례 포함
+  /\/references\// // 기준 본체 — 안티패턴·금지 예시를 문서로 싣는다
 ]
 
 function shouldSkipHtmlFile(filePath) {
@@ -298,6 +378,22 @@ function checkHtmlFile(filePath) {
     // div onclick (R-10)
     if (CLICK_ON_DIV.test(trimmed)) {
       error(relPath, lineNum, '[R-10] <div>/<span> onclick 금지. <button> 또는 <a> 사용.', trimmed.slice(0, 100))
+    }
+
+    // 가짜 콘텐츠 (R-23)
+    if (FAKE_LOREM.test(trimmed)) {
+      error(relPath, lineNum, '[R-23] lorem ipsum 채움 텍스트 금지. 실제 서비스 문안 또는 task contract contentSources 기반 카피를 사용한다.', trimmed.slice(0, 100))
+    }
+    if (FAKE_FILLER_KO.test(trimmed)) {
+      error(relPath, lineNum, '[R-23] 자리 채움 문구 금지. 실제 콘텐츠를 넣거나 contentSources에서 실제 용어를 가져온다.', trimmed.slice(0, 100))
+    }
+    if (FAKE_IMG_HOTLINK.test(trimmed)) {
+      error(relPath, lineNum, '[R-23] placeholder 이미지 핫링크 금지. 실제 자산 경로 또는 실제 비율의 data-uri 표기를 사용한다(납품 self-contained 정책).', trimmed.slice(0, 100))
+    }
+
+    // 한글 조판 하한 (R-24) — leading-none은 한글 본문에서 글줄 겹침을 만든다
+    if (LEADING_NONE.test(trimmed)) {
+      error(relPath, lineNum, '[R-24] leading-none 클래스 금지. 본문은 1.6~1.7을 지키고, 단행 UI의 행간은 컴포넌트 CSS(badge·tag·btn)가 소유한다.', trimmed.slice(0, 100))
     }
 
     // Tailwind raw 컬러 유틸 (R-01: 토큰 시스템 우회)

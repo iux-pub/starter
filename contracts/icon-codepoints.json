@@ -1,0 +1,1088 @@
+{
+  "name": "infoUX Icon Codepoints",
+  "version": "1.0.0",
+  "policy": "아이콘 이름 ↔ 코드포인트 대장이다. 한 번 부여한 번호는 영구히 고정한다. 아이콘을 폐기해도 번호를 회수하지 않고 tombstone으로 남긴다 — 재사용하면 이미 납품된 사이트의 아이콘이 다른 그림으로 바뀐다.",
+  "nextCodepoint": "U+E048",
+  "icons": {
+    "chevron-left": {
+      "codepoint": "U+E000",
+      "category": "navigation",
+      "source": "google-material",
+      "sourceName": "chevron_left",
+      "license": "Apache-2.0",
+      "sha256": "82ad1cd6462a3c134bded6c431370f4dc8e3c32a3ccdbd3096805a8db671c70b",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold"
+      ]
+    },
+    "chevron-right": {
+      "codepoint": "U+E001",
+      "category": "navigation",
+      "source": "google-material",
+      "sourceName": "chevron_right",
+      "license": "Apache-2.0",
+      "sha256": "8f5653ff042ede397f141effc17118095e223a92c7ad1855e7afc17a1754bf8c",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold"
+      ]
+    },
+    "chevron-up": {
+      "codepoint": "U+E002",
+      "category": "navigation",
+      "source": "google-material",
+      "sourceName": "keyboard_arrow_up",
+      "license": "Apache-2.0",
+      "sha256": "b1696a136597155df11aeb6e142bf2437d0a8a4fed008500716266ac49cc0a9e",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold"
+      ]
+    },
+    "chevron-down": {
+      "codepoint": "U+E003",
+      "category": "navigation",
+      "source": "google-material",
+      "sourceName": "keyboard_arrow_down",
+      "license": "Apache-2.0",
+      "sha256": "904d2879d0b2563ca351544c6c3b039709aa5609ac7623d23467a23685e9fd2f",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold"
+      ]
+    },
+    "arrow-left": {
+      "codepoint": "U+E004",
+      "category": "navigation",
+      "source": "google-material",
+      "sourceName": "arrow_back",
+      "license": "Apache-2.0",
+      "sha256": "6dfe5de7c96d814a445ff1980aa6c916ac5eeb9292c658433d6e702150305672",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold"
+      ]
+    },
+    "arrow-right": {
+      "codepoint": "U+E005",
+      "category": "navigation",
+      "source": "google-material",
+      "sourceName": "arrow_forward",
+      "license": "Apache-2.0",
+      "sha256": "be1c2e558b28e2994bf74123c406b98ff64d3db7d9085983afde1bdce85d6b8b",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold"
+      ]
+    },
+    "arrow-up": {
+      "codepoint": "U+E006",
+      "category": "navigation",
+      "source": "google-material",
+      "sourceName": "arrow_upward",
+      "license": "Apache-2.0",
+      "sha256": "75deff4b5ba5e877671564c419099af1856558fbcadbbf6cc27375ec5728d3b0",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold"
+      ]
+    },
+    "arrow-down": {
+      "codepoint": "U+E007",
+      "category": "navigation",
+      "source": "google-material",
+      "sourceName": "arrow_downward",
+      "license": "Apache-2.0",
+      "sha256": "3ea537e18abf9a4cb308554c4dba64ef1f9295c9f3285f7ec7fdb7c21dc0a849",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold"
+      ]
+    },
+    "menu": {
+      "codepoint": "U+E008",
+      "category": "navigation",
+      "source": "google-material",
+      "sourceName": "menu",
+      "license": "Apache-2.0",
+      "sha256": "6460a68c391f804bce7948c15787cc81ca0ca3cf0e4d08d53282e0d780eb7bd0",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold"
+      ]
+    },
+    "close": {
+      "codepoint": "U+E009",
+      "category": "navigation",
+      "source": "google-material",
+      "sourceName": "close",
+      "license": "Apache-2.0",
+      "sha256": "d8fecc72ed2d59b02e0a6cb170f8f3eb52be6caf669e6d148158bf4624de4f95",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold"
+      ]
+    },
+    "more-vertical": {
+      "codepoint": "U+E00A",
+      "category": "navigation",
+      "source": "google-material",
+      "sourceName": "more_vert",
+      "license": "Apache-2.0",
+      "sha256": "a52b1196a0393d288e3fac2448432de79ad313040423a55c020bdffbd350682a",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold"
+      ]
+    },
+    "external-link": {
+      "codepoint": "U+E00B",
+      "category": "navigation",
+      "source": "google-material",
+      "sourceName": "open_in_new",
+      "license": "Apache-2.0",
+      "sha256": "eacb0c09b8942be8112d085e16ac81f4501394feb6e2e730b449de208858b7f5",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold"
+      ]
+    },
+    "search": {
+      "codepoint": "U+E00C",
+      "category": "action",
+      "source": "google-material",
+      "sourceName": "search",
+      "license": "Apache-2.0",
+      "sha256": "361fe5daf45fbad09b57b81ec09a61061b467487ff63283567db80734cf779dc",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold"
+      ]
+    },
+    "filter": {
+      "codepoint": "U+E00D",
+      "category": "action",
+      "source": "google-material",
+      "sourceName": "filter_alt",
+      "license": "Apache-2.0",
+      "sha256": "82036a8211840982d517e67d454ee07fc9ac2fd7e44810492f4a2ad224695d88",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "download": {
+      "codepoint": "U+E00E",
+      "category": "action",
+      "source": "google-material",
+      "sourceName": "download",
+      "license": "Apache-2.0",
+      "sha256": "a2aef5c52a352e6d65787df8955743d584474e25bb7ab76e507dc5fcce4f30f6",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold"
+      ]
+    },
+    "upload": {
+      "codepoint": "U+E00F",
+      "category": "action",
+      "source": "google-material",
+      "sourceName": "upload",
+      "license": "Apache-2.0",
+      "sha256": "8a5efb92a807c57ddfd72fc09fc45459c880d609f7627a2e9ce34bacac0ebe27",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold"
+      ]
+    },
+    "share": {
+      "codepoint": "U+E010",
+      "category": "action",
+      "source": "google-material",
+      "sourceName": "share",
+      "license": "Apache-2.0",
+      "sha256": "aad814b35b619853df50aec9743deecb0bd321f9116a52b59d4e59f9ebd8a4e3",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "print": {
+      "codepoint": "U+E011",
+      "category": "action",
+      "source": "google-material",
+      "sourceName": "print",
+      "license": "Apache-2.0",
+      "sha256": "4f9016ca0c8c286f690542c63e03e13b58c3a5bfb850e36897ae648fa8ed69d3",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "copy": {
+      "codepoint": "U+E012",
+      "category": "action",
+      "source": "google-material",
+      "sourceName": "content_copy",
+      "license": "Apache-2.0",
+      "sha256": "5a3280ed5b72fa22b1b549925611af889256df62946c7ea8f20ecd6f4f29ac93",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "edit": {
+      "codepoint": "U+E013",
+      "category": "action",
+      "source": "google-material",
+      "sourceName": "edit",
+      "license": "Apache-2.0",
+      "sha256": "9debe2ddf22f322797d1806ae824074b8363b8e2ed1880ea8381ae6a3edb4aeb",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "delete": {
+      "codepoint": "U+E014",
+      "category": "action",
+      "source": "google-material",
+      "sourceName": "delete",
+      "license": "Apache-2.0",
+      "sha256": "6ffdb6fd1e8109a9e3b4806215eca7e9d3e80c90cd9d1c6521aa3f4d91844faf",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "add": {
+      "codepoint": "U+E015",
+      "category": "action",
+      "source": "google-material",
+      "sourceName": "add",
+      "license": "Apache-2.0",
+      "sha256": "2c17446d33187c5f9c36d84f680250f2297afff8af79ad5ae576f8e4119cccc2",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold"
+      ]
+    },
+    "refresh": {
+      "codepoint": "U+E016",
+      "category": "action",
+      "source": "google-material",
+      "sourceName": "refresh",
+      "license": "Apache-2.0",
+      "sha256": "c850a19369dfbdd675b5fb4367a0026bee121abb60dbf0c17ff0c76914d3484b",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold"
+      ]
+    },
+    "save": {
+      "codepoint": "U+E017",
+      "category": "action",
+      "source": "google-material",
+      "sourceName": "save",
+      "license": "Apache-2.0",
+      "sha256": "ec93b41e8ebfcb497ae32bc989f38ca3679268ecf391c3e398f2685b7e61cc5d",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "settings": {
+      "codepoint": "U+E018",
+      "category": "action",
+      "source": "google-material",
+      "sourceName": "settings",
+      "license": "Apache-2.0",
+      "sha256": "dd1a54bdbc580b05afc361ae1a901369f5a14e495823a0f330b0a969dc6a7558",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "check": {
+      "codepoint": "U+E019",
+      "category": "action",
+      "source": "google-material",
+      "sourceName": "check",
+      "license": "Apache-2.0",
+      "sha256": "89f2db6e6fd0d932d75145442f8e233d72d0dd05acf1c8e57c62b83e76f4d97e",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold"
+      ]
+    },
+    "info": {
+      "codepoint": "U+E01A",
+      "category": "status",
+      "source": "google-material",
+      "sourceName": "info",
+      "license": "Apache-2.0",
+      "sha256": "81a0ff6e26220f5ba24274150f357fa2a42672c4c2eaa30e9dfe5b8d687a996e",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "warning": {
+      "codepoint": "U+E01B",
+      "category": "status",
+      "source": "google-material",
+      "sourceName": "warning",
+      "license": "Apache-2.0",
+      "sha256": "3c4b33db601f78f3fde7c0a57668de6e67e6862b5b5f7da7f3fb09a1ae53e308",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "error": {
+      "codepoint": "U+E01C",
+      "category": "status",
+      "source": "google-material",
+      "sourceName": "error",
+      "license": "Apache-2.0",
+      "sha256": "6ab59a0b97aeadd915e6e54779f19526ae08dbece6b7e695eb02253449282172",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "success": {
+      "codepoint": "U+E01D",
+      "category": "status",
+      "source": "google-material",
+      "sourceName": "check_circle",
+      "license": "Apache-2.0",
+      "sha256": "056da4994a301932d5b2b10f26d18e1bbfcd34bbba7e8f42d0a3fceb85920768",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "help": {
+      "codepoint": "U+E01E",
+      "category": "status",
+      "source": "google-material",
+      "sourceName": "help",
+      "license": "Apache-2.0",
+      "sha256": "2df060823387538a5539ab7b8539c56ee17b1562a420bdd83e89a462fef80cbd",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "bell": {
+      "codepoint": "U+E01F",
+      "category": "status",
+      "source": "google-material",
+      "sourceName": "notifications",
+      "license": "Apache-2.0",
+      "sha256": "bd3665a9443f9e7a6c85f02bdcc03b4b200b904cd04b66a4fdc5c75274562657",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "lock": {
+      "codepoint": "U+E020",
+      "category": "status",
+      "source": "google-material",
+      "sourceName": "lock",
+      "license": "Apache-2.0",
+      "sha256": "33580aa68b1f6a54711b69d149b324bddd0a0be47ad2e91d3fff871f213e0206",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "unlock": {
+      "codepoint": "U+E021",
+      "category": "status",
+      "source": "google-material",
+      "sourceName": "lock_open",
+      "license": "Apache-2.0",
+      "sha256": "165a45c6f76278fe850cb885369b87f310b286baa3cd684c587f802d61fadeed",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "calendar": {
+      "codepoint": "U+E022",
+      "category": "form",
+      "source": "google-material",
+      "sourceName": "calendar_today",
+      "license": "Apache-2.0",
+      "sha256": "43af19ced948c10a6e1b6dfa0a422fb9049311e14f5fcbcdc73d35b57f34d5da",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "clock": {
+      "codepoint": "U+E023",
+      "category": "form",
+      "source": "google-material",
+      "sourceName": "schedule",
+      "license": "Apache-2.0",
+      "sha256": "f027a8013d994bf8b262527bc710e826b5bc2360d68804f4f89c3ed56ba097e0",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "eye": {
+      "codepoint": "U+E024",
+      "category": "form",
+      "source": "google-material",
+      "sourceName": "visibility",
+      "license": "Apache-2.0",
+      "sha256": "05e570cdc10a2cc9b883af167b9b1e0f84cd28ec64f6eb55e0d0301efa403b0d",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "eye-off": {
+      "codepoint": "U+E025",
+      "category": "form",
+      "source": "google-material",
+      "sourceName": "visibility_off",
+      "license": "Apache-2.0",
+      "sha256": "4ff1ab29b9619287445006d6dba9f3afec333e49c9a80d19d199c9ea94bd4ec0",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "attachment": {
+      "codepoint": "U+E026",
+      "category": "form",
+      "source": "google-material",
+      "sourceName": "attach_file",
+      "license": "Apache-2.0",
+      "sha256": "751bc82d3a24e106fb595e7e16578d5889d14af0eee0c4fce8c86a7666fb948f",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold"
+      ]
+    },
+    "checkbox": {
+      "codepoint": "U+E027",
+      "category": "form",
+      "source": "google-material",
+      "sourceName": "check_box",
+      "license": "Apache-2.0",
+      "sha256": "bac8f4ffeb88979b978826a950c0a4ce47463c347c3afe3fe5a257c372a5cd96",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "radio": {
+      "codepoint": "U+E028",
+      "category": "form",
+      "source": "google-material",
+      "sourceName": "radio_button_checked",
+      "license": "Apache-2.0",
+      "sha256": "90f9e6761fd545dba151dd738c1adff9fab37a83c5af89de354e0bc50f61040f",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold"
+      ]
+    },
+    "dropdown": {
+      "codepoint": "U+E029",
+      "category": "form",
+      "source": "google-material",
+      "sourceName": "arrow_drop_down",
+      "license": "Apache-2.0",
+      "sha256": "7c30fc4cf054646b4543f7d8c94c3b70b0b439bf171d2b5559b33d564b8ddf62",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold"
+      ]
+    },
+    "minus": {
+      "codepoint": "U+E02A",
+      "category": "form",
+      "source": "google-material",
+      "sourceName": "remove",
+      "license": "Apache-2.0",
+      "sha256": "adc8635e9ae9d83a64747515ed45095ba4d366ee4b651340dc53c06b44b1c786",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold"
+      ]
+    },
+    "drag-handle": {
+      "codepoint": "U+E02B",
+      "category": "form",
+      "source": "google-material",
+      "sourceName": "drag_indicator",
+      "license": "Apache-2.0",
+      "sha256": "7b9a011a097c7b129e5d3e9619a37880e35afb37c4c0a7556c9a38c0fb92c048",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold"
+      ]
+    },
+    "file": {
+      "codepoint": "U+E02C",
+      "category": "content",
+      "source": "google-material",
+      "sourceName": "description",
+      "license": "Apache-2.0",
+      "sha256": "f96cf10f72cd6ad75bee4248f7a2121ce1669fa5313a49f501ef014dc3be2b7d",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "folder": {
+      "codepoint": "U+E02D",
+      "category": "content",
+      "source": "google-material",
+      "sourceName": "folder",
+      "license": "Apache-2.0",
+      "sha256": "e3b44a90fd37597a747bc48200066af09b406d133da9ecf08b1ecbf6cb64fc0d",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "image": {
+      "codepoint": "U+E02E",
+      "category": "content",
+      "source": "google-material",
+      "sourceName": "image",
+      "license": "Apache-2.0",
+      "sha256": "7c085862e6e1df74ec47e1087c5eb5d79f1416c3715fd1045b313a5092956fff",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "video": {
+      "codepoint": "U+E02F",
+      "category": "content",
+      "source": "google-material",
+      "sourceName": "videocam",
+      "license": "Apache-2.0",
+      "sha256": "16b09902c218579fdee71a4af941688156bec37dde039e0649f7a426686d6036",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "document": {
+      "codepoint": "U+E030",
+      "category": "content",
+      "source": "google-material",
+      "sourceName": "article",
+      "license": "Apache-2.0",
+      "sha256": "99c5dd68a35abc1fab979f311469da7aeb42e2232e7864bfdaece4136fe6b331",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "list": {
+      "codepoint": "U+E031",
+      "category": "content",
+      "source": "google-material",
+      "sourceName": "list",
+      "license": "Apache-2.0",
+      "sha256": "a50091d9bbe0b19323852af6eef1f4c44fb1c76d531112d9b8b59b84f2f94247",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold"
+      ]
+    },
+    "grid": {
+      "codepoint": "U+E032",
+      "category": "content",
+      "source": "google-material",
+      "sourceName": "grid_view",
+      "license": "Apache-2.0",
+      "sha256": "0373633d4042ad15941f1cdb0482ac96bfe3c05496b001fcacf7b51584c3a968",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "table": {
+      "codepoint": "U+E033",
+      "category": "content",
+      "source": "google-material",
+      "sourceName": "table_chart",
+      "license": "Apache-2.0",
+      "sha256": "0ad9f18e8851ca9ad6dbdca295360b926660f8d15eaada1a31c3324b6115a2d4",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "link": {
+      "codepoint": "U+E034",
+      "category": "content",
+      "source": "google-material",
+      "sourceName": "link",
+      "license": "Apache-2.0",
+      "sha256": "5b2006973b771c1f6a0459a4708f2347d03e7aed0a7c099a00945988b3e41029",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold"
+      ]
+    },
+    "tag": {
+      "codepoint": "U+E035",
+      "category": "content",
+      "source": "google-material",
+      "sourceName": "label",
+      "license": "Apache-2.0",
+      "sha256": "a139f23a22ec5d6454ca4429e77cca3086bceec7d1bfcb46ed4fa428b36be96a",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "user": {
+      "codepoint": "U+E036",
+      "category": "identity",
+      "source": "google-material",
+      "sourceName": "person",
+      "license": "Apache-2.0",
+      "sha256": "a2162e564240836edbc1d787a29e16aa7bbae08079a791cd154b688f0c602a32",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "users": {
+      "codepoint": "U+E037",
+      "category": "identity",
+      "source": "google-material",
+      "sourceName": "group",
+      "license": "Apache-2.0",
+      "sha256": "5318fe178616e879cff6f0864d53b6c877beb64ca5658c6a51c8f777598c92bb",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "building": {
+      "codepoint": "U+E038",
+      "category": "identity",
+      "source": "google-material",
+      "sourceName": "apartment",
+      "license": "Apache-2.0",
+      "sha256": "0686e4c22f19f3c97d52b50ce82ba12912ede7d77c2800f31139ef63dbf7fcbe",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold"
+      ]
+    },
+    "phone": {
+      "codepoint": "U+E039",
+      "category": "identity",
+      "source": "google-material",
+      "sourceName": "call",
+      "license": "Apache-2.0",
+      "sha256": "eba74fe2a774dd0bcaa3db52fdb80c254f0bbccb3c4aa192b27f93c92a4d8221",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "mail": {
+      "codepoint": "U+E03A",
+      "category": "identity",
+      "source": "google-material",
+      "sourceName": "mail",
+      "license": "Apache-2.0",
+      "sha256": "a5932addaeda86f038f9caa4937b7b7c6bc88dbef0ea78e997112793519cda15",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "map-pin": {
+      "codepoint": "U+E03B",
+      "category": "identity",
+      "source": "google-material",
+      "sourceName": "place",
+      "license": "Apache-2.0",
+      "sha256": "999a67ccd634c71ab6c7d3e638f5d271d4637e12edbddaf2d69075f0a79ea1c8",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "play": {
+      "codepoint": "U+E03C",
+      "category": "media",
+      "source": "google-material",
+      "sourceName": "play_arrow",
+      "license": "Apache-2.0",
+      "sha256": "f0fc9e7883efe1cdae8ba38a6ca15f8542de179179f13df46e05ad4208af104b",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "pause": {
+      "codepoint": "U+E03D",
+      "category": "media",
+      "source": "google-material",
+      "sourceName": "pause",
+      "license": "Apache-2.0",
+      "sha256": "2419819095a7d29719efb9bf44b53968f8f639443d2f2102fe00387938b30e3b",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "volume": {
+      "codepoint": "U+E03E",
+      "category": "media",
+      "source": "google-material",
+      "sourceName": "volume_up",
+      "license": "Apache-2.0",
+      "sha256": "2e4921a305c20292480e6275ed62d4149c79400bd4843006d7751e5eabd2506d",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "fullscreen": {
+      "codepoint": "U+E03F",
+      "category": "media",
+      "source": "google-material",
+      "sourceName": "fullscreen",
+      "license": "Apache-2.0",
+      "sha256": "cf03cb33fc3e4701308ab1c2810df8e29dbacd13199884c9ad6ba0064b6a1944",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold"
+      ]
+    },
+    "zoom-in": {
+      "codepoint": "U+E040",
+      "category": "media",
+      "source": "google-material",
+      "sourceName": "zoom_in",
+      "license": "Apache-2.0",
+      "sha256": "fa8df2bf8cfb84c7d51a210fea21f58ebdd7022a4ad9e2eae9becf3fa16435ae",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold"
+      ]
+    },
+    "zoom-out": {
+      "codepoint": "U+E041",
+      "category": "media",
+      "source": "google-material",
+      "sourceName": "zoom_out",
+      "license": "Apache-2.0",
+      "sha256": "3f533cdcedd6d80421915fa910ddb547e051ecb1e432a93f7e74692f213ba427",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold"
+      ]
+    },
+    "home": {
+      "codepoint": "U+E042",
+      "category": "domain",
+      "source": "google-material",
+      "sourceName": "home",
+      "license": "Apache-2.0",
+      "sha256": "f60794d203c39cd08cb7f0bfe31ab75db5d25894a37a4938604e780b8e34f72f",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "bookmark": {
+      "codepoint": "U+E043",
+      "category": "domain",
+      "source": "google-material",
+      "sourceName": "bookmark",
+      "license": "Apache-2.0",
+      "sha256": "a9e7b134466da89733300b13d5eaaa3bd3f43a60f1e34840756327e8f3312234",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "star": {
+      "codepoint": "U+E044",
+      "category": "domain",
+      "source": "google-material",
+      "sourceName": "star",
+      "license": "Apache-2.0",
+      "sha256": "3548f8b4226b24d3616a66beb4b11d624ddf9706e38c1419ce5be3d3240caa11",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    },
+    "chart-bar": {
+      "codepoint": "U+E045",
+      "category": "domain",
+      "source": "google-material",
+      "sourceName": "bar_chart",
+      "license": "Apache-2.0",
+      "sha256": "8037a081138531a8b0b3e426ad5f4699ab52469d328b0e57b0cccf671ca9622b",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold"
+      ]
+    },
+    "globe": {
+      "codepoint": "U+E046",
+      "category": "domain",
+      "source": "google-material",
+      "sourceName": "public",
+      "license": "Apache-2.0",
+      "sha256": "49e4ed62fa15d7523c592cc27b5a3deb5929455c826ac0504307f889a05a034d",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold"
+      ]
+    },
+    "language": {
+      "codepoint": "U+E047",
+      "category": "domain",
+      "source": "google-material",
+      "sourceName": "translate",
+      "license": "Apache-2.0",
+      "sha256": "72f06f20592992053aabff10ef2d2b8b7712cb96947456a15b43d4c961fe3403",
+      "paths": 1,
+      "addedAt": "2026-08-23",
+      "variants": [
+        "slim",
+        "bold"
+      ]
+    },
+    "sitemap": {
+      "codepoint": "U+E048",
+      "category": "custom",
+      "source": "infomind-original",
+      "license": "proprietary",
+      "sha256": "d8f6acd21f3e518fcd691aa0054f1ff985ac29727e6ee863076d40509cc4099b",
+      "paths": 2,
+      "addedAt": "2026-08-24",
+      "model": "claude",
+      "prompt": "사이트맵 — 위쪽 한 칸에서 아래 두 칸으로 갈라지는 계통도",
+      "variants": [
+        "slim",
+        "bold",
+        "fill"
+      ]
+    }
+  },
+  "tombstones": {},
+  "updatedAt": "2026-08-24",
+  "variants": {
+    "fill": {
+      "count": 40,
+      "updatedAt": "2026-08-23"
+    },
+    "bold": {
+      "count": 72,
+      "updatedAt": "2026-08-23"
+    },
+    "slim": {
+      "count": 72,
+      "updatedAt": "2026-08-23"
+    }
+  }
+}

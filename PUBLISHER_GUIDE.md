@@ -303,7 +303,85 @@ src/styles/project/
 
 ---
 
-## 5. 개발 중 자주 쓰는 명령
+## 5. 아이콘 쓰기
+
+**설치할 것도, 설정할 것도 없다.** 아이콘은 이미 프로젝트 안에 들어 있다.
+
+### 5-1. 한 줄이면 된다
+
+```html
+<span class="icon-font icon-font--search" aria-hidden="true"></span>
+```
+
+`search` 자리에 아이콘 이름을 넣는다. 색은 부모의 글자색을, 크기는 `font-size`를 따라간다.
+
+### 5-2. 어떤 아이콘이 있는지 보기
+
+```bash
+npm run icons:sheet
+```
+
+`dist/icon-sheet.html`이 생긴다. 브라우저로 열면 전체 목록이 48·24·20·16px로 나온다.
+이름을 그대로 복사해 쓰면 된다.
+
+AI 도구(Claude·Codex 등)와 작업할 때는 infoUX MCP의 `list_icons`가 같은 목록을 준다.
+
+### 5-3. 크기
+
+| 클래스 | 크기 | 쓰는 곳 |
+|---|---|---|
+| `.icon-font` | 24px | 기본 |
+| `.icon-font--xsmall` | 16px | 표 안, 작은 배지 |
+| `.icon-font--small` | 20px | 버튼 안, 목록 |
+| `.icon-font--large` | 32px | 카드 헤더 |
+| `.icon-font--xlarge` | 40px | 빈 화면 안내 |
+| `.icon-font--inherit` | 글자 크기 | 본문 텍스트와 섞일 때 |
+
+### 5-4. aria-hidden은 항상 붙인다
+
+폰트 아이콘은 스크린리더가 코드포인트를 엉뚱하게 읽는다. **아이콘은 숨기고 뜻은 밖에서 전한다.**
+
+**옆에 텍스트가 있으면** 그 텍스트가 뜻을 전한다.
+
+```html
+<button class="btn">
+  <span class="icon-font icon-font--small icon-font--download" aria-hidden="true"></span>
+  내려받기
+</button>
+```
+
+**아이콘만 있으면** 버튼에 `aria-label`을 준다.
+
+```html
+<button class="btn btn--text" aria-label="닫기">
+  <span class="icon-font icon-font--close" aria-hidden="true"></span>
+</button>
+```
+
+아이콘만 있는 버튼은 클릭 영역을 44×44px 이상으로 잡는다. 아이콘이 24px이어도
+padding으로 영역을 확보한다 (R-13).
+
+### 5-5. 하면 안 되는 것
+
+- **다른 데서 아이콘을 가져와 붙이지 않는다.** 굵기와 여백이 안 맞아 세트가 무너지고
+  라이선스 근거도 안 남는다 (R-27)
+- **아이콘에 색을 넣지 않는다.** 부모의 `color`를 따라가게 둔다
+- **목록에 없는 이름을 쓰지 않는다.** 아무것도 안 나온다. 필요하면 UX팀에 요청한다
+- **이름에 크기 어휘를 쓰지 않는다.** `small`·`large` 등은 크기 클래스와 겹친다
+
+### 5-6. SVG 태그가 필요할 때
+
+폰트를 못 쓰는 곳(일부 메일 템플릿·외부 CMS)이나 아이콘 하나만 색을 달리해야 할 때 쓴다.
+
+```html
+<svg class="icon" aria-hidden="true">
+  <use href="/assets/icons/sprite.svg#search"></use>
+</svg>
+```
+
+낱개 SVG 파일이 필요하면 아이콘 스튜디오에서 「SVG 파일 받기」로 내려받는다.
+
+## 6. 개발 중 자주 쓰는 명령
 
 | 명령 | 언제 쓰나 |
 |------|-----------|
@@ -329,7 +407,7 @@ npm run build
 
 ---
 
-## 6. 접근성 기본 체크
+## 7. 접근성 기본 체크
 
 퍼블리싱 완료 전에 최소한 아래 항목은 직접 확인한다.
 
@@ -345,7 +423,7 @@ npm run build
 
 ---
 
-## 7. AI 도구와 같이 작업할 때
+## 8. AI 도구와 같이 작업할 때
 
 Codex, Claude Code, Cursor 같은 AI 도구를 사용할 때는 이 starter의 `AGENTS.md`, `CLAUDE.md`, `.claude/skills/`, `.agents/skills/`가 기준이 된다.
 
@@ -361,7 +439,7 @@ AI가 바로 코드를 만들려고 하면 먼저 `contracts/task-contract.md` �
 
 ---
 
-## 8. 문제 상황별 확인
+## 9. 문제 상황별 확인
 
 ### 스타일이 적용되지 않는다
 
@@ -407,7 +485,7 @@ AI가 바로 코드를 만들려고 하면 먼저 `contracts/task-contract.md` �
 
 ---
 
-## 9. 작업 완료 전 체크리스트
+## 10. 작업 완료 전 체크리스트
 
 - [ ] `npm run check`를 실행했다.
 - [ ] `npm run lint:css`를 실행했다.
@@ -423,7 +501,7 @@ AI가 바로 코드를 만들려고 하면 먼저 `contracts/task-contract.md` �
 
 ---
 
-## 10. 기억할 원칙
+## 11. 기억할 원칙
 
 starter의 목적은 빠르게 예쁜 화면을 만드는 것보다, 프로젝트마다 같은 품질 기준으로 퍼블리싱을 시작하게 하는 것이다.
 
